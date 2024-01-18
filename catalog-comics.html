@@ -1,1 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог комиксов</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+
+  <style>
+    @font-face {
+      font-family: 'Roboto Condensed';
+      src: url('') format ('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: 'Roboto Condensed', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #000000;
+    }
+    header {
+      background-image: url('https://res.cloudinary.com/dwdxk7uti/image/upload/v1702410158/xyjlrm.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no repeat;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-bottom: 20px;
+    }
+    img {
+      width: 100%;
+    }
+    input[type="text"] {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+    .search-button, .filter-button {
+      padding: 8px 15px;
+      background-color: #FF9D3B;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .search-button:hover, .filter-button:hover {
+      background-color: #45a049;
+    }
+    #comics-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 0.1rem;
+    }
+    .comic-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px; /* Отступ между рядами */
+    }
+    .comic {
+      position: relative;
+      width: calc(50% - 0.1rem);
+      margin: 0.5rem;
+      box-shadow: 0 0 30px rgba(255, 171, 70, 0.6);
+      border: 0px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .comic::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+    }
+    .comic:hover {
+      transform: scale(1.05);
+    }
+    .comic img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+    .comic-text {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 18px;
+      text-align: center;
+      width: 80%;
+    }
+    .comic.filtered {
+      border: 2px solid #FFAB46;
+      display: block;
+    }
+    .filter-container {
+      margin-top: 10px;
+    }
+    .filter-container label {
+      color: white;
+      margin-right: 10px;
+    }
+    .filter-container select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #333;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://res.cloudinary.com/dwdxk7uti/image/upload/v1702409348/pqalte.png" >
+  <div>
+    <label for="search"></label>
+    <input type="text" id="search" placeholder="Комикс атауы бойынша іздеңіз">
+    <button class="search-button" onclick="filterComics('title')">Іздеу</button>
+    <div class="filter-container">
+      <label for="genreSearch">Жанр:</label>
+      <select id="genreSearch">
+        <option value="">Барлығы</option>
+        <option value="Хоррор">Хоррор</option>
+        <option value="Триллер">Триллер</option>
+        <option value="Драма">Драма</option>
+        <option value="Шытырман">Шытырман</option>
+        <option value="Фентези">Фентези</option>
+        <option value="Комедия">Комедия</option>
+        <option value="Күнделікті">Күнделікті</option>
+      </select>
+      <button class="filter-button" onclick="filterComics('genre')">Сүзгі</button>
+    </div>
+  </div>
+</header>
+
+<div id="comics-container">
+  <div class="comic-row">
+    <!-- Комиксы в первой строке -->
+    <div class="comic" data-genre="Хоррор">
+      <a href=""><img src="https://res.cloudinary.com/dwdxk7uti/image/upload/v1701801430/gpzdj8fehxvdaaza6oyf.png" alt="Комикс 1"></a>
+      <div class="comic-text">Айырбас Терминал</div>
+    </div>
+
+    <div class="comic" data-genre="Триллер">
+      <img src="https://res.cloudinary.com/dwdxk7uti/image/upload/v1701801422/udv0rbz0n6s74sujizpc.png" alt="Комикс 2">
+      <div class="comic-text">Күртебек дос іздейді</div>
+    </div>
+  </div>
+
+  <div class="comic-row">
+    <div class="comic" data-genre="Шытырман, Күнделікті">
+      <img src="https://res.cloudinary.com/dwdxk7uti/image/upload/v1703950860/jailauda.png">
+      <div class="comic-text">Жайлауда</div>
+    </div>  
+    <div class="comic" data-genre="Триллер, Драма">
+      <img src="https://res.cloudinary.com/dwdxk7uti/image/upload/v1703950934/tosqaul.png">
+      <div class="comic-text">Тосқауыл</div>
+      </div>      
+    </div>
+    <!-- Осы жерден жабылады -->
+    <div class="comic-row">
+    <div class="comic" data-genre="Шытырман">
+      <img src="https://res.cloudinary.com/dwdxk7uti/image/upload/v1703950839/shekteuler.png">
+      <div class="comic-text">Шектеулілер</div>
+    </div>  
+    <div class="comic" data-genre="Фентези, Драма">
+      <img src="https://res.cloudinary.com/dwdxk7uti/image/upload/v1703950966/sorede.png">
+      <div class="comic-text">Сөреде</div>
+      </div>      
+    </div>
+    <!-- Осы жерден жабылады -->
+    <div class="comic-row">
+    <div class="comic" data-genre="Комедия, Күнделікті">
+      <img src="https://res.cloudinary.com/dwdxk7uti/image/upload/v1703950888/alabai.png">
+      <div class="comic-text">Алабай</div>
+    </div>  
+    <div class="comic" data-genre="Күнделікті, Комедия, Драма">
+      <img src="https://res.cloudinary.com/dwdxk7uti/image/upload/v1703950942/maiml.png">
+      <div class="comic-text">Ұсқынсыз маймылдың мект...</div>
+      </div>      
+    </div>
+    <!-- Осы жерден жабылады -->
+    
+  </div>
+</div>
+
+<script>
+  function filterComics(searchType) {
+  var input, genreInput, comics, comic, text;
+  input = document.getElementById("search");
+  genreInput = document.getElementById("genreSearch").value;
+
+  comics = document.getElementById("comics-container");
+  comic = comics.getElementsByClassName("comic");
+
+  for (var i = 0; i < comic.length; i++) {
+    text = comic[i].getElementsByClassName("comic-text")[0];
+    var titleMatch = text.innerHTML.toUpperCase().indexOf(input.value.toUpperCase()) > -1;
+    var genres = comic[i].getAttribute("data-genre").toUpperCase().split(',').map(genre => genre.trim());
+    var genreMatch = genreInput === "" || genres.includes(genreInput.toUpperCase());
+
+    if (searchType === 'title' && titleMatch && genreMatch) {
+      comic[i].classList.add("filtered");
+      comic[i].style.display = ""; // Отображаем соответствующие комиксы
+    } else if (searchType === 'genre' && genreMatch) {
+      comic[i].classList.add("filtered");
+      comic[i].style.display = ""; // Отображаем соответствующие комиксы
+    } else {
+      comic[i].classList.remove("filtered");
+      comic[i].style.display = "none"; // Скрываем несоответствующие комиксы
+    }
+  }
+}
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var comics = document.getElementsByClassName("comic");
+
+    for (var i = 0; i < comics.length; i++) {
+      comics[i].addEventListener("click", function() {
+        var link = this.getAttribute("data-link");
+        if (link) {
+          window.location.href = link;
+        }
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
 
